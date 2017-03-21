@@ -61,3 +61,21 @@ $(function initializeMap (){
   drawMarker('activity', [40.716291, -73.995315]);
 
 });
+
+$('#hoteladd').on('click', function() {
+  var $hotelchoice = $('#hotel-choices').val();
+  var $hotellist = $('#hotellist');
+  $hotellist.append($hotelchoice);
+})
+
+$('#restaurantadd').on('click', function() {
+  var $restaurantchoice = $('#restaurant-choices').val();
+  var $restaurantlist = $('#restaurantlist');
+  $restaurantlist.append($restaurantchoice);
+})
+
+$('#activityadd').on('click', function() {
+  var $activitychoice = $('#activity-choices').val();
+  var $activitylist = $('#activitylist');
+  $activitylist.append($activitychoice);
+})
