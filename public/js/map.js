@@ -62,20 +62,120 @@ $(function initializeMap (){
 
 });
 
+var day = 2;
+var hotels = [null, [],[],[]];
+var restaurants = [null, [],[],[]];
+var activities = [null, [],[],[]];
+
+var $activitylist = $('#activitylist');
+var $hotellist = $('#hotellist');
+var $restaurantlist = $('#restaurantlist');
+
+function megaclear() {
+  $hotellist.empty();
+  $restaurantlist.empty();
+  $activitylist.empty();
+}
+
+function megapopulate() {
+  hotels[day].forEach(function(hotel) {
+    $hotellist.append(hotel);
+  });
+  restaurants[day].forEach(function(restaurant) {
+    $restaurantlist.append(restaurant);
+  });
+  activities[day].forEach(function(activity) {
+    $activitylist.append(activity);
+  });
+}
+
+function mega() {
+  megaclear();
+  megapopulate();
+}
+
+function changeDay(day) {
+  $('#day-text').empty();
+  $('#day-text').append('Day ' + day);
+}
+
+$("#removeDay").on("click", function(){
+  hotels.splice(day, 1);
+  hotels.push([]);
+
+  restaurants.splice(day, 1);
+  restaurants.push([]);
+
+  activities.splice(day, 1);
+  activities.push([]);
+
+  // hotels = hotels.slice(0, day).concat(hotels.slice(day+1).push([]));
+  // restaurants = restaurants.slice(0,day).concat(restaurants.slice(day+1).push([]));
+  // activities = activities.slice(0, day).concat(activities.slice(day+1).push([]));
+  // console.log(hotels, restaurants, activities);
+  mega();
+})
+
+//here, 'this' points to whatever's clicked
+$("#day1").on("click", function(){
+  $(this).addClass("current-day");
+  $('#day' + day).removeClass('current-day');
+  day = 1;
+  changeDay(day);
+  mega();
+})
+
+$('#day2').on('click', function(){
+  $(this).addClass('current-day');
+  $('#day' + day).removeClass('current-day');
+  day = 2;
+  changeDay(day);
+  mega();
+})
+
+$('#day3').on('click', function(){
+  $(this).addClass('current-day');
+  $('#day' + day).removeClass('current-day');
+  day = 3;
+  changeDay(day);
+  mega();
+})
+
 $('#hoteladd').on('click', function() {
   var $hotelchoice = $('#hotel-choices').val();
-  var $hotellist = $('#hotellist');
-  $hotellist.append($hotelchoice);
+  hotels[day].push($hotelchoice);
+  mega();
+  //$hotellist.append($hotelchoice);
 })
 
 $('#restaurantadd').on('click', function() {
   var $restaurantchoice = $('#restaurant-choices').val();
-  var $restaurantlist = $('#restaurantlist');
-  $restaurantlist.append($restaurantchoice);
+  restaurants[day].push($restaurantchoice);
+  mega();
+  //$restaurantlist.append($restaurantchoice);
 })
 
 $('#activityadd').on('click', function() {
   var $activitychoice = $('#activity-choices').val();
+  activities[day].push($activitychoice);
+  mega();
+  //$activitylist.append($activitychoice);
+})
+
+$('#hotelremove').on('click', function() {
+  var $hotellist = $('#hotellist');
+  hotels[day].pop();
+  mega();
+})
+
+$('#restaurantremove').on('click', function() {
+  var $restaurantlist = $('#restaurantlist');
+  restaurants[day].pop();
+  mega();
+})
+
+$('#activityremove').on('click', function() {
   var $activitylist = $('#activitylist');
-  $activitylist.append($activitychoice);
+  activities[day].pop();
+  mega();
 })
