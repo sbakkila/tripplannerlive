@@ -1,3 +1,5 @@
+var currentMap;
+
 $(function initializeMap (){
 
   var fullstackAcademy = new google.maps.LatLng(40.705086, -74.009151);
@@ -33,13 +35,16 @@ $(function initializeMap (){
 
   var mapCanvas = document.getElementById('map-canvas');
 
-  var currentMap = new google.maps.Map(mapCanvas, {
+  currentMap = new google.maps.Map(mapCanvas, {
     center: fullstackAcademy,
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: styleArr
   });
+});
 
+
+function updateMarkers(){
   var iconURLs = {
     hotel: '/images/lodging_0star.png',
     restaurant: '/images/restaurant.png',
@@ -59,8 +64,7 @@ $(function initializeMap (){
   drawMarker('hotel', [40.705137, -74.007624]);
   drawMarker('restaurant', [40.705137, -74.013940]);
   drawMarker('activity', [40.716291, -73.995315]);
-
-});
+}
 
 var day = 2;
 var hotels = [null, [],[],[]];
@@ -109,10 +113,6 @@ $("#removeDay").on("click", function(){
   activities.splice(day, 1);
   activities.push([]);
 
-  // hotels = hotels.slice(0, day).concat(hotels.slice(day+1).push([]));
-  // restaurants = restaurants.slice(0,day).concat(restaurants.slice(day+1).push([]));
-  // activities = activities.slice(0, day).concat(activities.slice(day+1).push([]));
-  // console.log(hotels, restaurants, activities);
   mega();
 })
 
@@ -145,6 +145,7 @@ $('#hoteladd').on('click', function() {
   var $hotelchoice = $('#hotel-choices').val();
   hotels[day].push($hotelchoice);
   mega();
+  updateMarkers();
   //$hotellist.append($hotelchoice);
 })
 
